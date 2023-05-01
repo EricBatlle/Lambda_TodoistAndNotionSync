@@ -6,20 +6,8 @@ const notion = new Client({
     auth: process.env.NOTION_TOKEN
 })
 
-async function handler(req, res) {
-    console.time("eric");
-    const tasks = await getTasksFromNotionDatabase();
-    const currentDate = new Date();
-    const filteredTasks = tasks.filter(
-        (task) => task.isDone && (new Date(task.last_edited_time) < currentDate)
-    );
-    await CompleteTodoistTasks(filteredTasks);
-    res.status(200).json(filteredTasks);
-    console.timeEnd("eric");
-}
-
 async function update() {
-    console.time("eric");
+    console.time("update");
     const tasks = await getTasksFromNotionDatabase();
     const currentDate = new Date();
     const filteredTasks = tasks.filter(
@@ -27,7 +15,7 @@ async function update() {
     );
     await CompleteTodoistTasks(filteredTasks);
     console.log(filteredTasks);
-    console.timeEnd("eric");
+    console.timeEnd("update");
 }
 
 /**
